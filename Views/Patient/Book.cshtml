@@ -1,0 +1,190 @@
+﻿@model List<Mvc.Models.Clinic.Doctor>
+
+@{
+    ViewData["Title"] = "Book Appointment";
+}
+
+<div class="container py-5">
+
+    <div class="mb-4">
+
+        <h2 class="fw-bold mb-1">
+
+            <i class="bi bi-calendar-plus text-primary me-2"></i>
+
+            Book Appointment
+
+        </h2>
+
+        <p class="text-muted">
+            Choose your doctor, date and time.
+        </p>
+
+    </div>
+
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="alert alert-danger rounded-4 shadow-sm">
+
+            <i class="bi bi-exclamation-circle-fill me-2"></i>
+
+            @ViewBag.Error
+
+        </div>
+    }
+
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="card border-0 shadow-sm rounded-4">
+
+            <div class="card-body text-center p-5">
+
+                <i class="bi bi-person-x text-primary display-3"></i>
+
+                <h4 class="fw-bold mt-3">
+                    No Approved Doctors
+                </h4>
+
+                <p class="text-muted">
+                    There are no approved doctors available for booking right now.
+                </p>
+
+                <a asp-controller="Patient"
+                   asp-action="Index"
+                   class="btn btn-primary rounded-3 px-4">
+
+                    <i class="bi bi-arrow-left me-2"></i>
+
+                    Back to Dashboard
+
+                </a>
+
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <div class="card border-0 shadow-sm rounded-4">
+
+            <div class="card-body p-4 p-md-5">
+
+                <form asp-controller="Patient"
+                      asp-action="Book"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+
+                    <!-- Doctor -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label fw-semibold">
+
+                            <i class="bi bi-person-badge text-primary me-1"></i>
+
+                            Choose Doctor
+
+                        </label>
+
+                        <select name="doctorId"
+                                class="form-select form-select-lg rounded-3"
+                                required>
+
+                            <option value="">
+                                -- Select Doctor --
+                            </option>
+
+                            @foreach (var doctor in Model)
+                            {
+                                <option value="@doctor.DoctorId">
+
+                                    Dr. @doctor.User.FullName
+                                    - @doctor.Specialization
+
+                                </option>
+                            }
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Date -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label fw-semibold">
+
+                            <i class="bi bi-calendar3 text-primary me-1"></i>
+
+                            Appointment Date
+
+                        </label>
+
+                        <input type="date"
+                               name="date"
+                               class="form-control form-control-lg rounded-3"
+                               min="@DateTime.Today.ToString("yyyy-MM-dd")"
+                               required />
+
+                    </div>
+
+
+                    <!-- Time -->
+
+                    <div class="mb-4">
+
+                        <label class="form-label fw-semibold">
+
+                            <i class="bi bi-clock text-primary me-1"></i>
+
+                            Appointment Time
+
+                        </label>
+
+                        <input type="time"
+                               name="time"
+                               class="form-control form-control-lg rounded-3"
+                               required />
+
+                    </div>
+
+
+                    <!-- Buttons -->
+
+                    <div class="d-flex gap-2">
+
+                        <a asp-controller="Patient"
+                           asp-action="Index"
+                           class="btn btn-outline-secondary btn-lg rounded-3 px-4">
+
+                            <i class="bi bi-arrow-left me-1"></i>
+
+                            Back
+
+                        </a>
+
+
+                        <button type="submit"
+                                class="btn btn-primary btn-lg rounded-3 px-4">
+
+                            <i class="bi bi-calendar-check me-1"></i>
+
+                            Book Appointment
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+    }
+
+</div>

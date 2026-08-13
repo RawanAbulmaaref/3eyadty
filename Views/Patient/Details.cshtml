@@ -1,0 +1,318 @@
+﻿@model Mvc.Models.Clinic.Appointment
+
+@{
+    ViewData["Title"] = "Appointment Details";
+}
+
+<div class="container py-5">
+
+    <!-- ========================= -->
+    <!-- Header -->
+    <!-- ========================= -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold mb-1">
+
+                <i class="bi bi-calendar-check text-primary me-2"></i>
+
+                Appointment Details
+
+            </h2>
+
+            <p class="text-muted mb-0">
+                View your appointment information.
+            </p>
+
+        </div>
+
+
+        <!-- Back -->
+
+        <a href="/Patient/Index"
+           class="btn btn-outline-secondary"
+           style="position: relative; z-index: 1000;">
+
+            <i class="bi bi-arrow-left me-1"></i>
+
+            Back
+
+        </a>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- Appointment Information -->
+    <!-- ========================= -->
+
+    <div class="card border-0 shadow-sm rounded-4 mb-4">
+
+        <div class="card-body p-4">
+
+            <div class="row g-4">
+
+
+                <!-- Doctor -->
+
+                <div class="col-md-6">
+
+                    <div class="bg-light rounded-4 p-4 h-100">
+
+                        <h5 class="fw-bold mb-3">
+
+                            <i class="bi bi-person-badge text-primary me-2"></i>
+
+                            Doctor
+
+                        </h5>
+
+                        <h4 class="fw-bold">
+
+                            Dr. @(Model.Doctor?.User?.FullName ?? "Unknown")
+
+                        </h4>
+
+                        <p class="text-primary mb-0">
+
+                            @(Model.Doctor?.Specialization ?? "General")
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Patient -->
+
+                <div class="col-md-6">
+
+                    <div class="bg-light rounded-4 p-4 h-100">
+
+                        <h5 class="fw-bold mb-3">
+
+                            <i class="bi bi-person text-primary me-2"></i>
+
+                            Patient
+
+                        </h5>
+
+                        <h4 class="fw-bold">
+
+                            @(Model.Patient?.User?.FullName ?? "Unknown")
+
+                        </h4>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Appointment Date -->
+
+                <div class="col-md-4">
+
+                    <div class="border rounded-4 p-3">
+
+                        <small class="text-muted">
+                            Appointment Date
+                        </small>
+
+                        <h5 class="fw-bold mt-2 mb-0">
+
+                            @Model.Date.ToString("dd MMMM yyyy")
+
+                        </h5>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Time -->
+
+                <div class="col-md-4">
+
+                    <div class="border rounded-4 p-3">
+
+                        <small class="text-muted">
+                            Time
+                        </small>
+
+                        <h5 class="fw-bold mt-2 mb-0">
+
+                            @Model.Time.ToString(@"hh\:mm")
+
+                        </h5>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Status -->
+
+                <div class="col-md-4">
+
+                    <div class="border rounded-4 p-3">
+
+                        <small class="text-muted">
+                            Status
+                        </small>
+
+                        <h5 class="fw-bold mt-2 mb-0">
+
+                            @Model.Status
+
+                        </h5>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- Medical Record -->
+    <!-- ========================= -->
+    @if (Model.MedicalRecord != null)
+    {
+        <div class="card border-0 shadow-sm rounded-4">
+
+            <!-- Header -->
+
+            <div class="card-header bg-primary text-white rounded-top-4 p-4">
+
+                <h4 class="fw-bold mb-0">
+
+                    <i class="bi bi-file-medical me-2"></i>
+
+                    Medical Record
+
+                </h4>
+
+            </div>
+
+
+            <!-- Body -->
+
+            <div class="card-body p-4">
+
+                <div class="row g-4">
+
+
+                    <!-- Record Date -->
+
+                    <div class="col-md-4">
+
+                        <div class="bg-light rounded-4 p-3">
+
+                            <small class="text-muted">
+                                Record Date
+                            </small>
+
+                            <h5 class="fw-bold mt-2 mb-0">
+                                @Model.MedicalRecord.Date.ToString("dd MMMM yyyy")
+                            </h5>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Diagnosis -->
+
+                    <div class="col-md-8">
+
+                        <div class="bg-light rounded-4 p-3">
+
+                            <small class="text-muted">
+                                Diagnosis
+                            </small>
+
+                            <p class="fw-semibold mt-2 mb-0">
+
+                                @Model.MedicalRecord.Diagnosis
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Prescription -->
+
+                    <div class="col-md-6">
+
+                        <div class="bg-light rounded-4 p-3 h-100">
+
+                            <small class="text-muted">
+                                Prescription
+                            </small>
+
+                            <p class="fw-semibold mt-2 mb-0">
+
+                                @(string.IsNullOrWhiteSpace(
+                                    Model.MedicalRecord.Prescription)
+                                    ? "No prescription available."
+                                    : Model.MedicalRecord.Prescription)
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Doctor Note -->
+
+                    <div class="col-md-6">
+
+                        <div class="bg-light rounded-4 p-3 h-100">
+
+                            <small class="text-muted">
+                                Doctor's Note
+                            </small>
+
+                            <p class="fw-semibold mt-2 mb-0">
+
+                                @(string.IsNullOrWhiteSpace(
+                                    Model.MedicalRecord.Note)
+                                    ? "No notes available."
+                                    : Model.MedicalRecord.Note)
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <!-- No Medical Record -->
+
+        <div class="alert alert-info rounded-4 shadow-sm">
+
+            <i class="bi bi-info-circle me-2"></i>
+
+            No medical record has been added for this appointment yet.
+
+        </div>
+    }
+
+</div>

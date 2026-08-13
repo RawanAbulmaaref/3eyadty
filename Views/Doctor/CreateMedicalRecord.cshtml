@@ -1,0 +1,178 @@
+﻿@{
+    ViewData["Title"] = "Medical Record";
+}
+
+<style>
+    /* Sky Glassmorphism Main Card */
+    .record-glass-card {
+        background: rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(186, 230, 253, 0.8);
+        border-radius: 28px;
+        box-shadow: 0 20px 40px rgba(0, 119, 182, 0.08);
+        overflow: hidden;
+    }
+
+    /* Header Styling */
+    .record-header-bg {
+        background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+        color: #ffffff;
+        padding: 2.5rem 1.5rem;
+        box-shadow: 0 10px 20px rgba(2, 132, 199, 0.2);
+    }
+
+    .icon-header-glow {
+        width: 70px;
+        height: 70px;
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 0.8rem;
+    }
+
+    /* Custom Form Inputs */
+    .sky-input {
+        background: rgba(255, 255, 255, 0.8);
+        border: 1.5px solid rgba(186, 230, 253, 0.8);
+        border-radius: 16px;
+        padding: 12px 16px;
+        color: #0f172a;
+        transition: all 0.3s ease;
+    }
+
+        .sky-input:focus {
+            background: #ffffff;
+            border-color: #0284c7;
+            box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.25);
+            outline: none;
+        }
+
+    .form-label-custom {
+        color: #0369a1;
+        font-weight: 700;
+        font-size: 0.95rem;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    /* Custom Buttons */
+    .btn-sky-action {
+        border-radius: 16px;
+        padding: 12px 20px;
+        font-weight: 700;
+        transition: all 0.3s ease;
+    }
+
+    .btn-sky-primary {
+        background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+        color: #ffffff;
+        border: none;
+        box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3);
+    }
+
+        .btn-sky-primary:hover {
+            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(2, 132, 199, 0.45);
+        }
+
+    .btn-sky-outline {
+        background: rgba(255, 255, 255, 0.6);
+        color: #64748b;
+        border: 2px solid #cbd5e1;
+    }
+
+        .btn-sky-outline:hover {
+            background: #f1f5f9;
+            color: #334155;
+            border-color: #94a3b8;
+        }
+</style>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+
+            <div class="record-glass-card">
+
+                <!-- Header Section -->
+                <div class="record-header-bg text-center">
+                    <div class="icon-header-glow">
+                        <i class="bi bi-file-earmark-medical fs-2 text-white"></i>
+                    </div>
+                    <h2 class="fw-bold mb-1">Medical Record</h2>
+                    <span class="badge bg-white text-primary px-3 py-2 rounded-pill fw-bold fs-6 shadow-sm">
+                        <i class="bi bi-person-fill me-1"></i> Patient: @ViewBag.PatientName
+                    </span>
+                </div>
+
+                <!-- Form Section -->
+                <div class="card-body p-4 p-md-5">
+                    <form action="/Doctor/CreateMedicalRecord" method="post">
+
+                        <input type="hidden" name="id" value="@Context.Request.RouteValues["id"]" />
+
+                        <!-- Diagnosis -->
+                        <div class="mb-4">
+                            <label class="form-label-custom">
+                                <i class="bi bi-activity fs-5"></i> Diagnosis
+                            </label>
+                            <textarea name="diagnosis"
+                                      class="form-control sky-input"
+                                      rows="4"
+                                      maxlength="500"
+                                      placeholder="Enter detailed diagnosis..."
+                                      required></textarea>
+                        </div>
+
+                        <!-- Prescription -->
+                        <div class="mb-4">
+                            <label class="form-label-custom">
+                                <i class="bi bi-capsule fs-5"></i> Prescription
+                            </label>
+                            <textarea name="prescription"
+                                      class="form-control sky-input"
+                                      rows="4"
+                                      maxlength="500"
+                                      placeholder="Enter prescribed medications and dosage instructions..."></textarea>
+                        </div>
+
+                        <!-- Notes -->
+                        <div class="mb-4">
+                            <label class="form-label-custom">
+                                <i class="bi bi-journal-text fs-5"></i> Notes
+                            </label>
+                            <textarea name="note"
+                                      class="form-control sky-input"
+                                      rows="4"
+                                      maxlength="500"
+                                      placeholder="Enter additional clinical notes or follow-up instructions..."></textarea>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="d-flex flex-column flex-sm-row gap-3 pt-2">
+                            <a href="/Doctor/Index" class="btn btn-sky-outline btn-sky-action flex-fill text-center">
+                                Cancel
+                            </a>
+
+                            <button type="submit" class="btn btn-sky-primary btn-sky-action flex-fill d-flex align-items-center justify-content-center">
+                                <i class="bi bi-save me-2 fs-5"></i> Save Medical Record
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

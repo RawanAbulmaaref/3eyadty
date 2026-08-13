@@ -1,0 +1,179 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    color: #172b4d;
+}
+
+
+/* Navbar */
+
+.navbar {
+    padding: 18px 0;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.04);
+}
+
+.logo-icon {
+    width: 48px;
+    height: 48px;
+    background: #e8f2ff;
+    color: #2463d4;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 25px;
+}
+
+.brand-name {
+    font-size: 25px;
+    font-weight: 700;
+    color: #17345f;
+}
+
+.brand-subtitle {
+    color: #71809b;
+    font-size: 12px;
+}
+
+.nav-link {
+    color: #172b4d !important;
+    font-weight: 500;
+    margin: 0 15px;
+}
+
+    .nav-link.active,
+    .nav-link:hover {
+        color: #2463d4 !important;
+    }
+
+
+/* Hero */
+
+.hero {
+    min-height: 100vh;
+    background: linear-gradient( 90deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.92) 45%, rgba(255,255,255,0.25) 100% ), url('/images/hospital.jpg');
+    background-size: cover;
+    background-position: center;
+    padding-top: 80px;
+}
+
+
+/* Welcome */
+
+.welcome-badge {
+    display: inline-block;
+    background: #edf3ff;
+    color: #245fd1;
+    padding: 9px 17px;
+    border-radius: 30px;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+    .welcome-badge i {
+        margin-right: 7px;
+    }
+
+
+/* Heading */
+
+.hero h1 {
+    font-size: 58px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: #172f57;
+}
+
+    .hero h1 span {
+        color: #2867d8;
+        display: block;
+    }
+
+.hero-text {
+    color: #63738f;
+    font-size: 18px;
+    line-height: 1.8;
+    max-width: 550px;
+    margin-top: 20px;
+}
+
+.choose-text {
+    font-weight: 600;
+    color: #243b60;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+
+/* Role Cards */
+
+.role-card {
+    background: rgba(255,255,255,0.95);
+    border: 1px solid #e7edf6;
+    border-radius: 18px;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: #172b4d;
+    box-shadow: 0 8px 25px rgba(30,70,120,0.08);
+    transition: 0.3s;
+}
+
+    .role-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(30,70,120,0.14);
+        color: #172b4d;
+    }
+
+.role-icon {
+    min-width: 55px;
+    height: 55px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+}
+
+    .role-icon.doctor {
+        background: #e7f0ff;
+        color: #2867d8;
+    }
+
+    .role-icon.patient {
+        background: #e9f9f2;
+        color: #16a36a;
+    }
+
+.role-card h5 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.role-card small {
+    color: #7a879d;
+}
+
+.arrow {
+    margin-left: auto;
+    color: #2867d8;
+}
+
+
+/* Mobile */
+
+@media (max-width: 768px) {
+
+    .hero {
+        background-position: center;
+    }
+
+        .hero h1 {
+            font-size: 42px;
+        }
+
+    .hero-text {
+        font-size: 16px;
+    }
+}

@@ -1,0 +1,174 @@
+﻿@model Mvc.Models.Clinic.Doctor
+
+@{
+    ViewData["Title"] = "Doctor Details";
+}
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Doctor Profile</h2>
+            <p class="text-muted mb-0">Full information and status management for Dr. @Model.User?.FullName</p>
+        </div>
+        <!-- زر الرجوع إلى صفحة الأطباء بمسار صريح -->
+        <a href="/Admin/Doctors" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-2"></i> Back to Doctors
+        </a>
+    </div>
+
+    <div class="row g-4">
+        <!-- Details Card -->
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm rounded-4 p-3 mb-4">
+                <div class="card-body text-center">
+                    <div class="mb-3">
+                        <i class="bi bi-person-circle display-1 text-secondary"></i>
+                    </div>
+                    <h4 class="fw-bold mb-1">Dr. @Model.User?.FullName</h4>
+                    <p class="text-muted mb-3">@Model.Specialization</p>
+
+                    <div class="mb-3">
+                        @if (Model.Status == "Pending")
+                        {
+                            <span class="badge bg-warning text-dark fs-6 px-3 py-2">Pending Review</span>
+                        }
+                        else if (Model.Status == "Approved")
+                        {
+                            <span class="badge bg-success fs-6 px-3 py-2">Approved</span>
+                        }
+                        else if (Model.Status == "Rejected")
+                        {
+                            <span class="badge bg-danger fs-6 px-3 py-2">Rejected</span>
+                        }
+                    </div>
+
+                    @if (!string.IsNullOrEmpty(Model.RejectionReason))
+                    {
+                        <div class="alert alert-danger text-start small mb-3">
+                            <strong>Rejection Reason:</strong><br />@Model.RejectionReason
+                        </div>
+                    }
+
+                    <hr />
+
+                    <!-- Actions -->
+                    <div class="d-grid gap-2">
+                        @if (Model.Status != "Approved")
+                        {
+                            <form action="/Admin/ApproveDoctor" method="post">
+                                <input type="hidden" name="id" value="@Model.DoctorId" />
+                                <button type="submit" class="btn btn-success w-100">
+                                    <i class="bi bi-check-circle me-1"></i> Approve Doctor
+                                </button>
+                            </form>
+                        }
+
+                        @if (Model.Status != "Rejected")
+                        {
+                            <button type="button" class="btn btn-outline-danger w-100" data-bs-toggle="modal" data-bs-target="#rejectModal">
+                                <i class="bi bi-x-circle me-1"></i> Reject Doctor
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm rounded-4 p-3">
+                <div class="card-body">
+                    <h6 class="fw-bold mb-3">Contact & Qualifications</h6>
+                    <p class="mb-2"><i class="bi bi-envelope me-2 text-muted"></i> <strong>Email:</strong> @Model.User?.Email</p>
+                    <p class="mb-3"><i class="bi bi-award me-2 text-muted"></i> <strong>Specialization:</strong> @Model.Specialization</p>
+                    <div>
+                        <strong>Medical Certificate:</strong><br />
+                        @if (!string.IsNullOrEmpty(Model.CertificatePath))
+                        {
+                            <a href="@Model.CertificatePath" target="_blank" class="btn btn-sm btn-outline-primary mt-2">
+                                <i class="bi bi-file-earmark-arrow-down me-1"></i> View Certificate
+                            </a>
+                        }
+                        else
+                        {
+                            <span class="text-muted small">No certificate uploaded</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Appointments History -->
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-white py-3 border-0">
+                    <h5 class="fw-bold mb-0">Doctor's Appointments</h5>
+                </div>
+                <div class="card-body p-0">
+                    @if (Model.Appointments == null || !Model.Appointments.Any())
+                    {
+                        <div class="text-center py-5">
+                            <i class="bi bi-calendar-x fs-1 text-muted"></i>
+                            <p class="text-muted mt-2">No appointments booked with this doctor yet.</p>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="px-4">Date & Time</th>
+                                        <th>Status</th>
+                                        <th class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var app in Model.Appointments)
+                                    {
+                                        <tr>
+                                            <td class="px-4">
+                                                <div class="fw-semibold">@app.Date.ToString("yyyy-MM-dd")</div>
+                                                <small class="text-muted">@app.Time</small>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-secondary">@app.Status</span>
+                                            </td>
+                                            <td class="text-center">
+                                                <!-- رابط تفاصيل الموعد بمسار صريح مع المعرف id -->
+                                                <a href="/Admin/AppointmentDetails?id=@app.AppointmentId" class="btn btn-sm btn-outline-secondary">
+                                                    View
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal for Rejection -->
+<div class="modal fade" id="rejectModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 rounded-4 shadow">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">Reject Doctor Account</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="/Admin/RejectDoctor" method="post">
+                <input type="hidden" name="id" value="@Model.DoctorId" />
+                <div class="modal-body">
+                    <p class="text-muted">You are rejecting <strong>Dr. @Model.User?.FullName</strong>.</p>
+                    <label class="form-label fw-semibold">Rejection Reason</label>
+                    <textarea name="rejectionReason" class="form-control" rows="4" placeholder="Specify why this account is rejected..." required></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Reject</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

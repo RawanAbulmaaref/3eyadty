@@ -1,0 +1,695 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<style>
+
+    /* ============================= */
+    /* Dashboard Background */
+    /* ============================= */
+
+    .admin-page {
+        background: #f8fafc;
+        min-height: 100vh;
+    }
+
+
+    /* ============================= */
+    /* Hero */
+    /* ============================= */
+
+    .admin-hero {
+        background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 55%, #0284c7 100%);
+        border-radius: 28px;
+        padding: 42px;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 20px 45px rgba(15, 23, 42, 0.18);
+    }
+
+        .admin-hero::before {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            right: -80px;
+            top: -100px;
+        }
+
+        .admin-hero::after {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: rgba(56,189,248,0.12);
+            right: 120px;
+            bottom: -100px;
+        }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .admin-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255,255,255,0.14);
+        border: 1px solid rgba(255,255,255,0.2);
+        padding: 8px 16px;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 18px;
+    }
+
+
+    /* ============================= */
+    /* Section Titles */
+    /* ============================= */
+
+    .section-title {
+        font-weight: 800;
+        color: #0f172a;
+        margin-bottom: 20px;
+    }
+
+        .section-title i {
+            margin-right: 8px;
+        }
+
+
+    /* ============================= */
+    /* Statistics Cards */
+    /* ============================= */
+
+    .stat-card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 22px;
+        padding: 24px;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+        .stat-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.1);
+            border-color: transparent;
+        }
+
+        .stat-card::after {
+            content: "";
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            right: -35px;
+            bottom: -35px;
+            background: rgba(59,130,246,0.06);
+        }
+
+    .stat-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 18px;
+    }
+
+    .stat-label {
+        color: #64748b;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 5px;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #0f172a;
+        line-height: 1;
+    }
+
+
+    /* ============================= */
+    /* Icon Backgrounds */
+    /* ============================= */
+
+    .icon-primary {
+        background: #eff6ff;
+        color: #2563eb;
+    }
+
+    .icon-success {
+        background: #ecfdf5;
+        color: #16a34a;
+    }
+
+    .icon-warning {
+        background: #fffbeb;
+        color: #d97706;
+    }
+
+    .icon-danger {
+        background: #fef2f2;
+        color: #dc2626;
+    }
+
+    .icon-info {
+        background: #ecfeff;
+        color: #0891b2;
+    }
+
+
+    /* ============================= */
+    /* Management Cards */
+    /* ============================= */
+
+    .management-card {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 24px;
+        padding: 30px;
+        height: 100%;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+        .management-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 45px rgba(15,23,42,0.1);
+        }
+
+    .management-icon {
+        width: 75px;
+        height: 75px;
+        border-radius: 22px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        margin-bottom: 18px;
+    }
+
+    .management-card h4 {
+        font-weight: 800;
+        color: #0f172a;
+    }
+
+    .management-card p {
+        color: #64748b;
+        min-height: 45px;
+    }
+
+
+    /* ============================= */
+    /* Management Buttons */
+    /* ============================= */
+
+    .management-btn {
+        border-radius: 12px;
+        padding: 11px 20px;
+        font-weight: 600;
+        transition: all 0.25s ease;
+    }
+
+        .management-btn:hover {
+            transform: translateY(-2px);
+        }
+
+
+    /* ============================= */
+    /* Responsive */
+    /* ============================= */
+
+    @@media (max-width: 768px) {
+
+        .admin-hero {
+            padding: 30px 24px;
+            border-radius: 22px;
+        }
+
+            .admin-hero h1 {
+                font-size: 1.8rem;
+            }
+
+        .stat-number {
+            font-size: 1.7rem;
+        }
+    }
+
+</style>
+
+
+<div class="admin-page">
+
+    <div class="container py-5">
+
+
+        <!-- ================================= -->
+        <!-- HERO -->
+        <!-- ================================= -->
+
+        <div class="admin-hero mb-5">
+
+            <div class="hero-content">
+
+                <div class="admin-badge">
+
+                    <i class="bi bi-shield-check"></i>
+
+                    Admin Control Center
+
+                </div>
+
+                <h1 class="fw-bold mb-2">
+
+                    Welcome, Admin 👋
+
+                </h1>
+
+                <p class="mb-0 text-white-50 fs-5">
+
+                    Manage your clinic, doctors, patients and appointments
+                    from one place.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- DOCTORS STATISTICS -->
+        <!-- ================================= -->
+
+        <div class="d-flex align-items-center mb-4">
+
+            <h4 class="section-title mb-0">
+
+                <i class="bi bi-person-badge text-primary"></i>
+
+                Doctors Statistics
+
+            </h4>
+
+        </div>
+
+
+        <div class="row g-4 mb-5">
+
+
+            <!-- Total Doctors -->
+
+            <div class="col-sm-6 col-xl-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon icon-primary">
+
+                        <i class="bi bi-person-badge"></i>
+
+                    </div>
+
+                    <div class="stat-label">
+                        Total Doctors
+                    </div>
+
+                    <div class="stat-number">
+                        @ViewBag.TotalDoctors
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Approved Doctors -->
+
+            <div class="col-sm-6 col-xl-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon icon-success">
+
+                        <i class="bi bi-check-circle"></i>
+
+                    </div>
+
+                    <div class="stat-label">
+                        Approved Doctors
+                    </div>
+
+                    <div class="stat-number text-success">
+                        @ViewBag.ApprovedDoctors
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Pending Doctors -->
+
+            <div class="col-sm-6 col-xl-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon icon-warning">
+
+                        <i class="bi bi-hourglass-split"></i>
+
+                    </div>
+
+                    <div class="stat-label">
+                        Pending Doctors
+                    </div>
+
+                    <div class="stat-number text-warning">
+                        @ViewBag.PendingDoctors
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Rejected Doctors -->
+
+            <div class="col-sm-6 col-xl-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon icon-danger">
+
+                        <i class="bi bi-x-circle"></i>
+
+                    </div>
+
+                    <div class="stat-label">
+                        Rejected Doctors
+                    </div>
+
+                    <div class="stat-number text-danger">
+                        @ViewBag.RejectedDoctors
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- PATIENTS -->
+        <!-- ================================= -->
+
+        <h4 class="section-title">
+
+            <i class="bi bi-people text-info"></i>
+
+            Patients
+
+        </h4>
+
+
+        <div class="row g-4 mb-5">
+
+            <div class="col-sm-6 col-xl-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon icon-info">
+
+                        <i class="bi bi-people"></i>
+
+                    </div>
+
+                    <div class="stat-label">
+                        Total Patients
+                    </div>
+
+                    <div class="stat-number text-info">
+                        @ViewBag.TotalPatients
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- APPOINTMENTS -->
+        <!-- ================================= -->
+
+        <h4 class="section-title">
+
+            <i class="bi bi-calendar-check text-success"></i>
+
+            Appointment Statistics
+
+        </h4>
+
+
+        <div class="row g-4 mb-5">
+
+
+            <!-- Total -->
+
+            <div class="col-sm-6 col-xl-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon icon-primary">
+
+                        <i class="bi bi-calendar-check"></i>
+
+                    </div>
+
+                    <div class="stat-label">
+                        Total Appointments
+                    </div>
+
+                    <div class="stat-number">
+                        @ViewBag.TotalAppointments
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Pending -->
+
+            <div class="col-sm-6 col-xl-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon icon-warning">
+
+                        <i class="bi bi-hourglass-split"></i>
+
+                    </div>
+
+                    <div class="stat-label">
+                        Pending
+                    </div>
+
+                    <div class="stat-number text-warning">
+                        @ViewBag.PendingAppointments
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Approved -->
+
+            <div class="col-sm-6 col-xl-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon icon-success">
+
+                        <i class="bi bi-check-circle"></i>
+
+                    </div>
+
+                    <div class="stat-label">
+                        Approved
+                    </div>
+
+                    <div class="stat-number text-success">
+                        @ViewBag.ApprovedAppointments
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Cancelled -->
+
+            <div class="col-sm-6 col-xl-3">
+
+                <div class="stat-card">
+
+                    <div class="stat-icon icon-danger">
+
+                        <i class="bi bi-x-circle"></i>
+
+                    </div>
+
+                    <div class="stat-label">
+                        Cancelled
+                    </div>
+
+                    <div class="stat-number text-danger">
+                        @ViewBag.CancelledAppointments
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- MANAGEMENT -->
+        <!-- ================================= -->
+
+        <h4 class="section-title">
+
+            <i class="bi bi-grid text-primary"></i>
+
+            Management
+
+        </h4>
+
+
+        <div class="row g-4">
+
+
+            <!-- Doctors -->
+
+            <div class="col-md-4">
+
+                <div class="management-card">
+
+                    <div class="management-icon icon-primary">
+
+                        <i class="bi bi-person-badge"></i>
+
+                    </div>
+
+                    <h4>
+                        Doctors
+                    </h4>
+
+                    <p>
+                        Review and manage doctor accounts and approvals.
+                    </p>
+
+                    <a href="/Admin/Doctors"
+                       class="btn btn-primary management-btn">
+
+                        <i class="bi bi-person-badge me-2"></i>
+
+                        Manage Doctors
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Patients -->
+
+            <div class="col-md-4">
+
+                <div class="management-card">
+
+                    <div class="management-icon icon-info">
+
+                        <i class="bi bi-people"></i>
+
+                    </div>
+
+                    <h4>
+                        Patients
+                    </h4>
+
+                    <p>
+                        View and manage all registered patients.
+                    </p>
+
+                    <a href="/Admin/Patients"
+                       class="btn btn-info text-white management-btn">
+
+                        <i class="bi bi-people me-2"></i>
+
+                        View Patients
+
+                    </a>
+
+                </div>
+
+            </div>
+
+
+            <!-- Appointments -->
+
+            <div class="col-md-4">
+
+                <div class="management-card">
+
+                    <div class="management-icon icon-success">
+
+                        <i class="bi bi-calendar-check"></i>
+
+                    </div>
+
+                    <h4>
+                        Appointments
+                    </h4>
+
+                    <p>
+                        Monitor and manage all clinic appointments.
+                    </p>
+
+                    <a href="/Admin/Appointments"
+                       class="btn btn-success management-btn">
+
+                        <i class="bi bi-calendar-check me-2"></i>
+
+                        View Appointments
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,71 @@
+﻿@model Mvc.Models.Clinic.Appointment
+
+@{
+    ViewData["Title"] = "Appointment Details";
+}
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Appointment Details</h2>
+            <p class="text-muted mb-0">Detailed view of appointment #@Model.AppointmentId</p>
+        </div>
+        <a href="/Admin/Appointments" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left me-2"></i> Back to Appointments
+        </a>
+    </div>
+
+    <div class="row g-4">
+        <!-- Main Details -->
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm rounded-4 p-3 mb-4">
+                <div class="card-body">
+                    <h5 class="fw-bold mb-3 border-bottom pb-2">Appointment Information</h5>
+                    <p class="mb-2">
+                        <strong>Status:</strong>
+                        <span class="badge bg-secondary px-3 py-2">@Model.Status</span>
+                    </p>
+                    <p class="mb-2"><strong>Date:</strong> @Model.Date.ToString("yyyy-MM-dd")</p>
+                    <p class="mb-2"><strong>Time:</strong> @Model.Time</p>
+                </div>
+            </div>
+
+            <!-- Patient Info -->
+            <div class="card border-0 shadow-sm rounded-4 p-3">
+                <div class="card-body">
+                    <h5 class="fw-bold mb-3 border-bottom pb-2">Patient Details</h5>
+                    <p class="mb-1"><strong>Name:</strong> @Model.Patient?.User?.FullName</p>
+                    <p class="mb-0"><strong>Email:</strong> @Model.Patient?.User?.Email</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <!-- Doctor Info -->
+            <div class="card border-0 shadow-sm rounded-4 p-3 mb-4">
+                <div class="card-body">
+                    <h5 class="fw-bold mb-3 border-bottom pb-2">Doctor Details</h5>
+                    <p class="mb-1"><strong>Name:</strong> Dr. @Model.Doctor?.User?.FullName</p>
+                    <p class="mb-1"><strong>Specialization:</strong> @Model.Doctor?.Specialization</p>
+                    <p class="mb-0"><strong>Email:</strong> @Model.Doctor?.User?.Email</p>
+                </div>
+            </div>
+
+            <!-- Medical Record -->
+            <div class="card border-0 shadow-sm rounded-4 p-3">
+                <div class="card-body">
+                    <h5 class="fw-bold mb-3 border-bottom pb-2">Medical Record</h5>
+                    @if (Model.MedicalRecord != null)
+                    {
+                        <p class="mb-2"><strong>Diagnosis:</strong><br />@Model.MedicalRecord.Diagnosis</p>
+                        <p class="mb-0"><strong>Prescription:</strong><br />@Model.MedicalRecord.Prescription</p>
+                    }
+                    else
+                    {
+                        <p class="text-muted mb-0">No medical record attached to this appointment yet.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
